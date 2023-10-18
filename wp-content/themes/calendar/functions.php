@@ -114,3 +114,18 @@ add_theme_support( 'post-thumbnails' );
 add_image_size( 'full_hd', 1920, 1080 );
 
 
+// Add Custom Field Column
+function custom_columns_head($defaults) {
+    $defaults['name'] = 'Name';
+    return $defaults;
+}
+add_filter('manage_leads_posts_columns', 'custom_columns_head');
+
+// Display Custom Field Data
+function custom_columns_content($column_name, $post_ID) {
+    if ($column_name == 'name') {
+        $custom_field_value = get_field('name', $post_ID);
+        echo $custom_field_value;
+    }
+}
+add_action('manage_leads_posts_custom_column', 'custom_columns_content', 10, 2);
